@@ -1,6 +1,9 @@
+import { SelectArmor } from "./components/SelectArmor";
+
 function App() {
   return (
-    <div className="">
+    <div className="w-screen h-screen flex flex-col justify-center">
+      <SelectArmor />
     </div>
   );
 }
