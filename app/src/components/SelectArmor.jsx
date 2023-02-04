@@ -1,7 +1,23 @@
+import { useState } from "react";
 import { armor } from "../utils/armor";
 import { convertArmorNames } from "../utils/armorNamesConverter";
 
 export function SelectArmor() {
+  const [selectedItems, setSelectedItems] = useState({});
+
+  const handleWithUserSelection = (key, item) => {
+    if (selectedItems[key] == null) {
+      setSelectedItems({ ...selectedItems, [key]: item });
+    } else {
+      if (JSON.stringify(selectedItems[key]) === JSON.stringify(item)) {
+        delete selectedItems[key];
+        setSelectedItems(selectedItems);
+      } else {
+        setSelectedItems({ ...selectedItems, [key]: item });
+      }
+    }
+  };
+
   return Object.keys(armor.items).map((key, i) => {
     return (
       <div
@@ -15,7 +31,14 @@ export function SelectArmor() {
           return (
             <div
               key={index}
-              className="w-48 h-full hover:bg-[#404B69] hover:cursor-pointer flex flex-col items-center justify-center rounded-md z-10 transition-colors"
+              style={{
+                backgroundColor:
+                  JSON.stringify(selectedItems[key]) === JSON.stringify(item)
+                    ? "#404B69"
+                    : "transparent",
+              }}
+              className={`w-48 h-fullhover:bg-[#404B69] hover:cursor-pointer flex flex-col items-center justify-center rounded-md z-10 transition-colors`}
+              onClick={() => handleWithUserSelection(key, item)}
             >
               <section className="flex space-x-2 text-xs mb-1 text-white">
                 <div className="px-3 bg-[#00818A] rounded-sm">
